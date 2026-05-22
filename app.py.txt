@@ -1,0 +1,54 @@
+import streamlit as st
+import time
+
+# Ustawienia strony
+st.set_page_config(page_title="Moto-Porównywarka", page_icon="🚗", layout="wide")
+
+st.title("🚗 Inteligentny Agent Motoryzacyjny")
+st.subheader("Porównaj oferty z uwzględnieniem wiedzy pasjonatów i forów")
+
+# 1. Sekcja linków
+st.markdown("### 🔗 Krok 1: Wklej linki do ofert (max 3)")
+col1, col2, col3 = st.columns(3)
+with col1:
+    url_1 = st.text_input("Oferta 1", placeholder="https://www.otomoto.pl/oferta/...")
+with col2:
+    url_2 = st.text_input("Oferta 2", placeholder="https://www.otomoto.pl/oferta/...")
+with col3:
+    url_3 = st.text_input("Oferta 3", placeholder="https://www.otomoto.pl/oferta/...")
+
+# 2. Wybór profilu
+st.markdown("### 👥 Krok 2: Dla kogo jest to auto?")
+profil = st.radio(
+    "Wybierz profil kierowcy:",
+    ["Pierwszy samochód dla młodego kierowcy", "Samochód dla rodziny", "Samochód dla fana motoryzacji"],
+    horizontal=True
+)
+
+# 3. Uruchomienie
+st.markdown("---")
+if st.button("🚀 Uruchom porównywarkę", use_container_width=True):
+    if not (url_1 or url_2 or url_3):
+        st.error("Wklej przynajmniej jeden link do oferty!")
+    else:
+        # Efekt ładowania / Ikona generowania
+        with st.spinner("⚙️ Agent analizuje specyfikację oraz przeszukuje fora motoryzacyjne..."):
+            time.sleep(4) # Symulacja pracy AI i scrapingu
+        
+        st.success("✨ Analiza zakończona sukcesem!")
+        
+        # Przykładowy widok wyników
+        st.markdown("## 📊 Wyniki analizy dla profilu: " + profil)
+        
+        # Tutaj ląduje wygenerowana tabela i wnioski z LLM
+        st.info("Poniżej znajdziesz podsumowanie techniczne oraz ukryte wady/zalety modeli zgłaszane przez użytkowników na forach.")
+        
+        # 4. Opcja PDF
+        st.markdown("---")
+        st.markdown("### 📥 Pobierz wyniki")
+        st.download_button(
+            label="📄 Wygeneruj i pobierz raport PDF",
+            data="Przykładowa zawartość PDF", # Tutaj podłącza się skrypt generujący realny plik (np. ReportLab / FPDF)
+            file_name="porownanie_ofert.pdf",
+            mime="application/pdf"
+        )
